@@ -1,46 +1,32 @@
-﻿# legalwaffle
-Product Requirements Document (PRD): Dual-Purpose Legal AI Platform
-## Core Objective
-To develop an AI-powered legal technology platform that serves two distinct user personas with specialized workflows:
+Core Objective
+An AI platform that serves two primary functions: flagging hidden contract risks for everyday professionals and summarizing lengthy court judgments for legal researchers.
 
-Everyday Professionals: Flagging hidden risks and unfavorable clauses in standard contracts.
+Key Requirements
+Functional: Secure document uploads (PDF/DOCX), dual AI workflows (contract risk analysis vs. judgment summarization), an interactive split-screen viewer to map insights to original text, and user dashboards.
 
-Legal Researchers: Summarizing lengthy court judgments and extracting key legal precedents.
+Non-Functional: Strict privacy (end-to-end encryption, auto-deletion of processed files), fast performance (30-60 seconds for 50 pages), and mandatory disclaimers that the output is not formal legal advice.
 
-## Key Requirements
-### Functional Requirements
-Secure Document Uploads: Support for PDF and DOCX file formats with secure server-side handling.
+Technical Architecture
+Frontend: React.js (Vite) and Tailwind CSS.
 
-Dual AI Workflows: * Contract Risk Analysis: Categorizes risks (High, Medium, Low) and suggests mitigation strategies.
+Backend & Database: Node.js, Express.js, and MongoDB.
 
-Judgment Summarization: Extracts facts, procedural history, holding, and ratio decidendi.
+AI Layer: External LLM APIs (OpenAI or Anthropic) or a custom Python NLP microservice.
 
-Interactive Split-Screen Viewer: A side-by-side UI component that maps AI-generated insights directly to the corresponding highlighted text in the original document.
+MVP (Minimum Viable Product) Strategy
+Launch quickly by restricting the scope:
 
-User Dashboards: A centralized hub for users to manage past uploads, view processing statuses, and organize historical documents.
+Support PDFs only.
 
-### Non-Functional Requirements
-Strict Data Privacy: End-to-end encryption (E2EE) for documents in transit and at rest, coupled with automated TTL (Time-To-Live) deletion policies for processed files.
+Focus on one persona initially (judgment summarization is recommended as it's easier to build than subjective risk evaluation).
 
-High Performance & Scalability: Fast processing latency aiming for 30–60 seconds for a 50-page document.
+Use basic email/password auth.
 
-Legal Compliance: Mandatory, highly visible UI disclaimers stating that the platform's output does not constitute formal legal advice.
+Rely on a third-party LLM API rather than building a custom model.
 
-## Technical Architecture
-┌────────────────────────────────────────────────────────┐
-│               Frontend: React.js (Vite)                │
-└───────────────────────────┬────────────────────────────┘
-                            │ (HTTPS / WSS)
-┌───────────────────────────▼────────────────────────────┐
-│         Backend API Gateway: Node.js / Express         │
-└───────────────┬────────────────────────────┬───────────┘
-                │                            │
-┌───────────────▼──────────────┐  ┌──────────▼───────────┐
-│     Database: MongoDB        │  │       AI Layer       │
-│  (Users, Metadata, Logs)    │  │ (OpenAI/Anthropic)  │
-└──────────────────────────────┘  └──────────────────────┘
-Frontend: React.js built with Vite for optimal performance, styled using Tailwind CSS for a clean, professional interface.
+Future/Advanced Features (Post-MVP)
+Document Tools: Keyword search, version comparison (diffing updated contracts), and multi-format exports.
 
-Backend & Database: Node.js paired with Express.js for the API layer; MongoDB for flexible storage of user metadata, logs, and document schemas.
+UX & AI Enhancements: Hoverable jargon tooltips, regional language translation, and human-in-the-loop feedback to improve AI accuracy.
 
-AI Layer: Orchestrated calls to state-of-the-art external LLM APIs (OpenAI or Anthropic) utilizing advanced prompt engineering, or fallback to a custom Python NLP microservice for specialized parsing.
+Workflow Operations: Role-based access control (RBAC), secure sharing links, background asynchronous processing with alerts, and user API quota tracking. write in .md
